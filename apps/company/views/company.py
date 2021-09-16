@@ -1,5 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
+
+from apps.company.filters import CompanyFilter
 from apps.company.models.company import Company
 from apps.company.serializers.company import CompanySerializer
 from apps.users.models import Employees
@@ -9,10 +11,12 @@ from core.permissions import AdminPermission, OperatingStaffPermission, TickerSe
 
 
 
+
 class CompanyView(ModelViewSet):
     permission_classes = [AdminPermission]
     serializer_class = CompanySerializer
     queryset = Company.objects.all()
+    filterset_class = CompanyFilter
     # allowed_methods = ('GET', 'PUT', 'POST')
 
     def create(self, request, *args, **kwargs):

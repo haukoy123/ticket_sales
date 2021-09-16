@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
-from django.db import transaction
 from rest_framework.views import APIView
 import jwt
+
+from apps.users.filters import UserFilterSet
 from apps.users.models import User, Employees, Customer
 from apps.users.serializers import UserSerializer
 from django.contrib.auth import authenticate
@@ -16,13 +17,18 @@ from apps.users.serializers.user import LoginReadOnlySerializer, UserReadOnlySer
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.exceptions import APIException
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+import requests
+from django.shortcuts import render
 
-from core.mixins import GetSerializerClassMixin
 
 
 class UserLoginView(APIView):
     permission_classes = []
     serializer_class = LoginReadOnlySerializer
+
+
 
     def post(self, request):
         serializer = LoginReadOnlySerializer(data=request.data)
@@ -55,6 +61,12 @@ class UserView(ModelViewSet):
     }
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    filterset_class = UserFilterSet
+    # filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    # filter_backends = [filters.SearchFilter]
+    # filterset_fields = ['username', 'email']
+    # search_fields = ['username', 'email']
+    # ordering_fields = ['username', 'email']
 
     @action(
         methods=["GET"],
@@ -133,9 +145,11 @@ class UserView(ModelViewSet):
         data = {"token": token}
         return Response(data=data, status=status.HTTP_200_OK)
 
-
-
-
+# def showuser(request):
+#     response = requests.get("http://127.0.0.1:8000/api/v1/user")
+#     data = response.json()
+#     print(data)
+#     return render(request, 'index.html', {'data': data})
 
 
 

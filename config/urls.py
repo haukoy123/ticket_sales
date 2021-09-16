@@ -55,9 +55,13 @@ api_router.register("tickets", TicketView, basename="tickets")
 
 admin.autodiscover()
 
+
+# from apps.users.views.user import showuser
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path(r"api/v1/", include(api_router.urls)),
+    # path("index/", showuser , name ='index'),
 ]
 
 # urlpatterns.extend([

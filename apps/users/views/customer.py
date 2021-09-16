@@ -1,3 +1,4 @@
+from apps.users.filters import CustomerFilterSet
 from apps.users.models import User, Employees
 from apps.users.models.customer import Customer
 from apps.users.serializers.customer import CustomerSerializer, CustomerReadOnlySerializer
@@ -12,6 +13,7 @@ class CustomerViewSet(ModelViewSet):
     serializer_class = CustomerReadOnlySerializer
     permission_classes = [OperatingStaffPermission | AdminPermission]
     # serializer_detail_class = CustomerReadOnlySerializer
+    filterset_class = CustomerFilterSet
 
     def get_queryset(self):
         if self.permission_classes is AdminPermission:

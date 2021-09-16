@@ -1,5 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
+
+from apps.users.filters import EmployeesFilterSet
 from apps.users.models import User
 from apps.users.models.employees import Employees
 from apps.users.serializers.employees import EmployeesSerializer, EmployeesReadonlySerializer
@@ -12,6 +14,7 @@ class EmployeesViewSet(ModelViewSet):
     permission_classes = [OperatingStaffPermission | AdminPermission]
     serializer_class = EmployeesReadonlySerializer
     # allowed_methods = ('GET',)
+    filterset_class = EmployeesFilterSet
 
 
     def get_queryset(self):
