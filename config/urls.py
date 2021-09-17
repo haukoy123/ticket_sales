@@ -20,22 +20,22 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
 
-# swagger_info = openapi.Info(
-#     title="Eureka API",
-#     default_version="v1",
-#     description="""Eureka project.""",
-#     contact=openapi.Contact(email="hautran2699@gmail.com"),
-#     license=openapi.License(name="Private"),
-# )
+swagger_info = openapi.Info(
+    title="Eureka API",
+    default_version="v1",
+    description="""Eureka project.""",
+    contact=openapi.Contact(email="hautran2699@gmail.com"),
+    license=openapi.License(name="Private"),
+)
 
-# schema_view = get_schema_view(
-#     info=swagger_info,
-#     public=True,
-#     authentication_classes=[
-#         rest_framework.authentication.SessionAuthentication
-#     ],
-#     permission_classes=[permissions.IsAdminUser],
-# )
+schema_view = get_schema_view(
+    info=swagger_info,
+    public=True,
+    authentication_classes=[
+        rest_framework.authentication.SessionAuthentication
+    ],
+    permission_classes=[permissions.IsAdminUser],
+)
 from apps.users.views.customer import CustomerViewSet
 from apps.users.views.employees import EmployeesViewSet
 
@@ -64,10 +64,10 @@ urlpatterns = [
     # path("index/", showuser , name ='index'),
 ]
 
-# urlpatterns.extend([
-#     path(
-#         r"swagger/",
-#         schema_view.with_ui("swagger", cache_timeout=0),
-#         name="schema-swagger-ui",
-#     ),
-# ])
+urlpatterns.extend([
+    path(
+        r"swagger/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+])
